@@ -3,42 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spark of Omens Tracker</title>
+    <title>Spark Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Spark of Omens Tracker</h1>
-        <p id="fractured"></p>
-        <p id="spark"></p>
 
-        <h2>Weapon Crafting Costs</h2>
-        <label>
-            <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('1H')"> 1H + Offhand
-        </label>
-        <label>
-            <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('2H')"> Two-Handed Weapon
-        </label>
-        <div class="counter-container">
-            <p>Sparks Already Used: <span id="usedSparksCounter">0</span></p>
-            <button onclick="adjustSparks(-1)">-1</button>
-            <button onclick="adjustSparks(1)">+1</button>
+        <!-- SVG Header with "Spark" and "Tracker" -->
+        <div class="header">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="200"
+              height="100"
+              viewBox="0 0 200 100"
+            >
+              <text
+                x="50%"
+                y="50%"
+                text-anchor="middle"
+                fill="#FFD700"
+                font-size="36"
+                font-family="Verdana, Geneva, sans-serif"
+                font-weight="bold"
+                dy=".3em"
+              >
+                Spark
+                <animate
+                  attributeName="fill"
+                  values="#FFD700; #FF4500; #FFD700"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </text>
+            </svg>
+            <svg
+              width="200"
+              height="200"
+              viewBox="0 0 200 200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 10 C120 60, 140 90, 100 170 C60 90, 80 60, 100 10"
+                fill="#FF4500"
+              >
+                <animate
+                  attributeName="d"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  values="
+                    M100 10 C120 60, 140 90, 100 170 C60 90, 80 60, 100 10;
+                    M100 15 C125 65, 135 95, 100 170 C65 85, 75 55, 100 15;
+                    M100 10 C120 60, 140 90, 100 170 C60 90, 80 60, 100 10"
+                />
+              </path>
+              <path
+                d="M100 50 C110 80, 120 100, 100 150 C80 100, 90 80, 100 50"
+                fill="#FFD700"
+              >
+                <animate
+                  attributeName="d"
+                  dur="1.5s"
+                  repeatCount="indefinite"
+                  values="
+                    M100 50 C110 80, 120 100, 100 150 C80 100, 90 80, 100 50;
+                    M100 55 C115 85, 125 105, 100 150 C75 95, 85 75, 100 55;
+                    M100 50 C110 80, 120 100, 100 150 C80 100, 90 80, 100 50"
+                />
+              </path>
+              <circle
+                cx="100"
+                cy="40"
+                r="5"
+                fill="#FF6347"
+                opacity="0.8"
+              >
+                <animate
+                  attributeName="cy"
+                  dur="1s"
+                  repeatCount="indefinite"
+                  values="40; 10; 40"
+                />
+                <animate
+                  attributeName="opacity"
+                  dur="1s"
+                  repeatCount="indefinite"
+                  values="0.8; 0; 0.8"
+                />
+              </circle>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="200"
+              height="100"
+              viewBox="0 0 200 100"
+            >
+              <text
+                x="50%"
+                y="50%"
+                text-anchor="middle"
+                fill="#FFD700"
+                font-size="36"
+                font-family="Verdana, Geneva, sans-serif"
+                font-weight="bold"
+                dy=".3em"
+              >
+                Tracker
+                <animate
+                  attributeName="fill"
+                  values="#FFD700; #1E90FF; #FFD700"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </text>
+            </svg>
         </div>
-        <h3>Select Crest Type:</h3>
-        <label>
-            <input type="checkbox" id="runedCheckbox" onchange="handleCrestTypeChange('Runed')"> Runed Harbinger's Crests
-        </label>
-        <label>
-            <input type="checkbox" id="gildedCheckbox" onchange="handleCrestTypeChange('Gilded')"> Gilded Harbinger's Crests
-        </label>
-        <p id="selected-craft">Select a weapon option and crest type to see the total crest costs.</p>
-        <p id="mythic-runs"></p>
 
+        <!-- Progress Section -->
+        <div class="progress">
+            <p id="fractured"></p>
+        </div>
+
+        <!-- Centralized Checkbox Sections -->
+        <div class="controls">
+            <!-- Crest Selection Section -->
+            <div class="checkbox-section">
+                <h2>Crest Selection</h2>
+                <label>
+                    <input type="checkbox" id="runedCheckbox" onchange="handleCrestTypeChange('Runed')"> Runed
+                </label>
+                <label>
+                    <input type="checkbox" id="gildedCheckbox" onchange="handleCrestTypeChange('Gilded')"> Gilded
+                </label>
+            </div>
+
+            <!-- Weapon Selection Section -->
+            <div class="checkbox-section">
+                <h2>Weapon Selection</h2>
+                <label>
+                    <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('1H')"> 1H + Offhand
+                </label>
+                <label>
+                    <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('2H')"> Two-Handed
+                </label>
+            </div>
+        </div>
+
+        <!-- Sparks Already Used -->
+        <div class="sparks-usage">
+            <p>
+                <strong>Sparks Already Used:</strong> <span id="usedSparksCounter">0</span>
+                <button class="small-btn" onclick="adjustSparks(-1)">-</button>
+                <button class="small-btn" onclick="adjustSparks(1)">+</button>
+            </p>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results">
+            <p id="selected-craft">Select options above to see total costs.</p>
+            <div id="mythic-runs"></div>
+        </div>
+
+        <!-- Script Display -->
         <div class="script-container">
             <pre id="wowScript">Generating script...</pre>
             <button onclick="copyToClipboard()">Copy</button>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

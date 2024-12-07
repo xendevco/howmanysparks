@@ -1,3 +1,4 @@
+/* General Body Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,64 +7,223 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #0D0D0D; /* Deep black background for true dark mode */
+    color: #EAEAEA; /* Soft white text for readability */
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Main Container */
 .container {
     text-align: center;
     max-width: 600px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for elevation */
+    background-color: #1A1A1A; /* Dark gray background for container */
+    border: 1px solid #333333; /* Subtle border for structure */
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Header */
 h1 {
-    color: #4CAF50;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #FFD700; /* Golden text for header */
+    text-shadow: 0 2px 4px rgba(255, 215, 0, 0.5); /* Subtle glow for effect */
 }
-
-p {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.script-container {
+.header {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: transparent; /* Ensure no background clashes */
+    border-radius: 12px;
+}
+
+/* Progress Section */
+.progress {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: #2C2C2C; /* Slightly lighter gray */
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #EAEAEA; /* Soft white for text */
+    border: 1px solid #444444; /* Subtle border */
+    font-weight: bold;
+}
+
+.progress span {
+    color: #FFD700; /* Gold color for numbers */
+}
+
+/* Controls Section */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+/* Checkbox Section */
+.checkbox-section {
+    background-color: #2C2C2C; /* Dark gray for section backgrounds */
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #444444; /* Subtle border */
+    color: #FFD700; /* Gold text for section headings */
+    text-align: center;
+    min-width: 200px; /* Maintain consistent size */
+}
+
+.checkbox-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #EAEAEA; /* Soft white for headings */
+}
+
+.checkbox-section label {
+    display: flex;
+    align-items: center; /* Align checkbox and text vertically */
+    gap: 10px; /* Adjust spacing between checkbox and text */
+    font-size: 1rem;
+    color: #EAEAEA; /* Soft white for labels */
+    cursor: pointer;
+    margin: 5px 0; /* Add consistent margin for spacing */
+}
+
+
+.checkbox-section input[type="checkbox"] {
+    accent-color: #FFD700; /* Gold checkboxes */
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Gold Text for Specific Labels */
+.progress p {
+    color: #FFD700; /* Gold color for "Fractured Spark of Omens" and "Spark of Omens" */
+    font-weight: bold;
+}
+
+.checkbox-section h2 {
+    color: #FFD700; /* Gold color for "Crest Selection" and "Weapon Selection" */
+    font-weight: bold;
+}
+
+
+/* Sparks Usage Section */
+.sparks-usage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.sparks-usage p {
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: bold;
+    color: #FFD700; /* Gold for emphasis */
+}
+
+.sparks-usage button {
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: 1px solid #FFD700;
+    border-radius: 6px;
+    background-color: #FFD700; /* Gold buttons */
+    color: #0D0D0D; /* Black text for contrast */
+    font-weight: bold;
+}
+
+.sparks-usage button:hover {
+    background-color: #FFC700;
+    transform: scale(1.05);
+}
+
+/* Results Section */
+.results {
+    text-align: left;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #2C2C2C; /* Neutral dark gray */
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #EAEAEA; /* Soft white for readability */
+    border: 1px solid #444444; /* Subtle border for structure */
+    line-height: 1.6;
+}
+
+.results strong {
+    color: #FFD700; /* Gold for key information */
+}
+
+.results ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+    list-style-type: disc;
+    color: #EAEAEA;
+}
+
+/* Script Display */
+.script-container {
     margin-top: 20px;
+    text-align: center;
 }
 
 pre {
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    margin: 0;
+    background-color: #2C2C2C; /* Neutral gray for script background */
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #EAEAEA; /* Soft white text */
     white-space: pre-wrap;
     word-break: break-word;
-    max-width: 80%;
+    max-width: 100%;
     overflow-x: auto;
 }
 
+/* Buttons */
 button {
-    padding: 5px 10px;
-    font-size: 0.9rem;
+    padding: 12px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #e0e0e0;
-    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    background-color: #FFD700; /* Gold buttons */
+    color: #0D0D0D; /* Black text for contrast */
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #d6d6d6;
+    background-color: #FFC700;
+    transform: scale(1.05);
 }
 
-.counter-container {
-    margin: 10px 0;
+/* Footer Toggle */
+#themeToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    background-color: #FFD700;
+    color: #0D0D0D;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(255, 215, 0, 0.3);
 }
 
-label {
-    margin: 5px 0;
+#themeToggle:hover {
+    background-color: #FFC700;
+    transform: scale(1.05);
 }
