@@ -16,15 +16,34 @@
         p {
             font-size: 1.5rem;
         }
+        .script-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
         pre {
             background-color: #f4f4f4;
             padding: 10px;
             border-radius: 5px;
-            font-size: 1.2rem;
-            margin: 20px auto;
-            width: fit-content;
+            font-size: 0.9rem; /* Smaller font */
+            margin: 0;
             white-space: pre-wrap;
             word-break: break-word;
+            max-width: 80%;
+            overflow-x: auto;
+        }
+        button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+        }
+        button:hover {
+            background-color: #d6d6d6;
         }
     </style>
 </head>
@@ -33,7 +52,10 @@
     <p id="fractured">Fractured Spark of Omens: Calculating...</p>
     <p id="spark">Spark of Omens: Calculating...</p>
 
-    <pre id="wowScript">Generating script...</pre>
+    <div class="script-container">
+        <pre id="wowScript">Generating script...</pre>
+        <button onclick="copyToClipboard()">Copy</button>
+    </div>
 
     <script>
         // Define the release date of the expansion
@@ -56,6 +78,16 @@
         // Generate the in-game script
         const wowScript = `/run a=C_CurrencyInfo.GetCurrencyInfo(3023) print("You have earned " .. a.totalEarned .. " of " .. a.maxQuantity .. " possible Fractured Spark of Omens")`;
         document.getElementById('wowScript').innerText = wowScript;
+
+        // Function to copy script to clipboard
+        function copyToClipboard() {
+            const scriptText = document.getElementById('wowScript').innerText;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                alert('Script copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy script: ' + err);
+            });
+        }
     </script>
 </body>
 </html>
