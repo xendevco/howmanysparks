@@ -34,7 +34,6 @@
             overflow-x: auto;
         }
         button {
-            margin-left: 10px;
             padding: 5px 10px;
             font-size: 0.9rem;
             cursor: pointer;
@@ -45,6 +44,9 @@
         button:hover {
             background-color: #d6d6d6;
         }
+        .counter-container {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -52,13 +54,18 @@
     <p id="fractured"></p>
     <p id="spark"></p>
 
-    <h2>Crafting Costs</h2>
+    <h2>Weapon Crafting Costs</h2>
     <label>
-        <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('oneHand')"> 1H + Offhand
+        <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('1H')"> 1H + Offhand
     </label>
     <label>
-        <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('twoHand')"> Two-Handed Weapon
+        <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('2H')"> Two-Handed Weapon
     </label>
+    <div class="counter-container">
+        <p>Sparks Already Used: <span id="usedSparksCounter">0</span></p>
+        <button onclick="adjustSparks(-1)">-1</button>
+        <button onclick="adjustSparks(1)">+1</button>
+    </div>
     <p id="selected-craft">Select a weapon option to see the total crest costs.</p>
     <p id="mythic-runs"></p>
 
@@ -72,42 +79,47 @@
         const today = new Date();
         const weeksSinceRelease = Math.floor((today - expansionReleaseDate) / (7 * 24 * 60 * 60 * 1000));
         const fracturedSparks = weeksSinceRelease + 1;
-        const fullSparks = Math.floor(fracturedSparks / 2);
+        const totalSparks = Math.floor(fracturedSparks / 2);
+        let usedSparks = 0;
 
         document.getElementById("fractured").innerText = `Fractured Spark of Omens: ${fracturedSparks}`;
-        document.getElementById("spark").innerText = `Spark of Omens: ${fullSparks}`;
+        document.getElementById("spark").innerText = `Spark of Omens: ${totalSparks}`;
 
         const costPerItem = { "619": 45, "636": 90 };
         const twoHandCrestCosts = { "619": costPerItem["619"], "636": costPerItem["636"] };
         const oneHandOffhandCrestCosts = { "619": costPerItem["619"] * 2, "636": costPerItem["636"] * 2 };
 
+        function adjustSparks(amount) {
+            usedSparks = Math.max(0, Math.min(totalSparks, usedSparks + amount));
+            document.getElementById("usedSparksCounter").innerText = usedSparks;
+            updateDisplay();
+        }
+
         function handleCheckboxChange(selected) {
             const oneHandCheckbox = document.getElementById("oneHandCheckbox");
             const twoHandCheckbox = document.getElementById("twoHandCheckbox");
 
-            if (selected === 'oneHand') {
+            if (selected === '1H') {
                 twoHandCheckbox.checked = false;
-            } else if (selected === 'twoHand') {
+            } else if (selected === '2H') {
                 oneHandCheckbox.checked = false;
             }
             updateDisplay();
         }
 
-        function calculateTotal(craftingType) {
-            const sparksUsed = 2;
-            const itemsCrafted = craftingType === "2H" ? 1 : 2;
-            const sparksRemaining = fullSparks - sparksUsed;
-            const additionalItems = sparksRemaining > 0 ? sparksRemaining : 0;
+        function calculateTotal(craftingType, remainingSparks) {
+            const sparksRequired = 2; // Both weapon types use 2 Sparks
+            const itemsCrafted = craftingType === "2H" ? 1 : 2; // 1 item for 2H, 2 for 1H + Offhand
+            const remainingItems = Math.max(remainingSparks - sparksRequired, 0);
 
-            const remainingRunedCrests = additionalItems * costPerItem["619"];
-            const remainingGildedCrests = additionalItems * costPerItem["636"];
-            const selectedCrestCosts = craftingType === "2H" ? twoHandCrestCosts : oneHandOffhandCrestCosts;
+            const runedCrestsRequired = craftingType === "2H" ? twoHandCrestCosts["619"] : oneHandOffhandCrestCosts["619"];
+            const gildedCrestsRequired = craftingType === "2H" ? twoHandCrestCosts["636"] : oneHandOffhandCrestCosts["636"];
 
             return {
-                totalRuned: selectedCrestCosts["619"] + remainingRunedCrests,
-                totalGilded: selectedCrestCosts["636"] + remainingGildedCrests,
-                totalItems: itemsCrafted + additionalItems,
-                totalSparks: sparksUsed + additionalItems,
+                totalRuned: runedCrestsRequired + remainingItems * costPerItem["619"],
+                totalGilded: gildedCrestsRequired + remainingItems * costPerItem["636"],
+                totalItems: itemsCrafted + remainingItems,
+                sparksUsed: sparksRequired + remainingItems,
             };
         }
 
@@ -118,23 +130,16 @@
         function updateDisplay() {
             const isOneHandSelected = document.getElementById("oneHandCheckbox").checked;
             const isTwoHandSelected = document.getElementById("twoHandCheckbox").checked;
+            const remainingSparks = Math.max(totalSparks - usedSparks, 0);
 
-            if (isOneHandSelected && isTwoHandSelected) {
-                document.getElementById("selected-craft").innerText = "Please select only one option: 1H + Offhand or Two-Handed Weapon.";
-                return;
-            }
-
-            let craftingType = null;
-            if (isOneHandSelected) craftingType = "1H";
-            if (isTwoHandSelected) craftingType = "2H";
-
-            if (!craftingType) {
+            if (!isOneHandSelected && !isTwoHandSelected) {
                 document.getElementById("selected-craft").innerText = "Select a weapon option to see the total crest costs.";
                 document.getElementById("mythic-runs").innerText = "";
                 return;
             }
 
-            const { totalRuned, totalGilded, totalItems, totalSparks } = calculateTotal(craftingType);
+            const craftingType = isOneHandSelected ? "1H" : "2H";
+            const { totalRuned, totalGilded, totalItems, sparksUsed } = calculateTotal(craftingType, remainingSparks);
 
             const onTimeRuned = calculateMythicRuns(totalRuned, 12);
             const failedRuned = calculateMythicRuns(totalRuned, 5);
@@ -143,7 +148,7 @@
 
             document.getElementById("selected-craft").innerText = `
                 Total Crest Costs (${craftingType === "2H" ? "Two-Handed Weapon" : "1H + Offhand"}):
-                - Total Items Crafted: ${totalItems} (using ${totalSparks} Sparks)
+                - Total Items Crafted: ${totalItems} (using ${sparksUsed} Sparks)
                 - 619: ${totalRuned} Runed Harbinger's Crests
                 - 636: ${totalGilded} Gilded Harbinger's Crests
             `;
