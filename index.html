@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark of Omens Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spark of Omens Tracker</h1>
+    <p id="fractured">Fractured Spark of Omens: Calculating...</p>
+    <p id="spark">Spark of Omens: Calculating...</p>
+
+    <script>
+        // Define the release date of the expansion (adjust as necessary)
+        const expansionReleaseDate = new Date('2024-01-01'); // Example date
+        const today = new Date();
+
+        // Calculate weeks since release
+        const weeksSinceRelease = Math.floor((today - expansionReleaseDate) / (7 * 24 * 60 * 60 * 1000));
+
+        // Calculate the number of Sparks
+        const fracturedSparks = weeksSinceRelease;
+        const fullSparks = Math.floor(fracturedSparks / 2);
+
+        // Update the webpage
+        document.getElementById('fractured').innerText = `Fractured Spark of Omens: ${fracturedSparks}`;
+        document.getElementById('spark').innerText = `Spark of Omens: ${fullSparks}`;
+    </script>
+</body>
+</html>
