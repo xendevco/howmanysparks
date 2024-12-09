@@ -134,6 +134,26 @@ function toggleTheme() {
     themeToggle.innerText = body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
 }
 
+// Toggle the region selector
+function toggleRegionSelector() {
+    const selector = document.getElementById('regionSelector');
+    selector.classList.toggle('expanded');
+}
+
+// Handle region selection
+function selectRegion(region) {
+    const regionDates = {
+        EU: '2024-08-28',
+        US: '2024-08-26',
+        OCE: '2024-08-27',
+    };
+
+    expansionReleaseDate = new Date(regionDates[region]);
+    updateSparksCount();
+    toggleRegionSelector(); // Collapse after selection
+}
+
+
 // Generate the in-game WoW script
 const wowScript = `/run a=C_CurrencyInfo.GetCurrencyInfo(3023) print("You have earned " .. a.totalEarned .. " of " .. a.maxQuantity .. " possible Fractured Spark of Omens")`;
 document.getElementById('wowScript').innerText = wowScript;

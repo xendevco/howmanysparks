@@ -8,6 +8,16 @@
 </head>
 <body>
     <div class="container">
+        <div id="regionSelector" class="region-selector">
+          <div class="region-header" onclick="toggleRegionSelector()">
+              <p>Select Region</p>
+          </div>
+          <div class="region-options">
+              <button class="region-btn" onclick="selectRegion('EU')">EU</button>
+              <button class="region-btn" onclick="selectRegion('US')">US</button>
+              <button class="region-btn" onclick="selectRegion('OCE')">OCE</button>
+          </div>
+      </div>
 
         <!-- SVG Header with "Spark" and "Tracker" -->
         <div class="header">

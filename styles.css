@@ -228,3 +228,61 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* Region Selector */
+.region-selector {
+    position: absolute;
+    top: 40px; /* Adjust to align closer to the arrow */
+    left: 50px; /* Fine-tune to align with the container */
+    background-color: #1A1A1A;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, left 0.3s ease-in-out; /* Smooth expansion */
+    max-height: 40px; /* Collapsed height */
+    z-index: 10;
+    color: #EAEAEA;
+    width: 150px; /* Ensure enough space for buttons */
+}
+
+.region-selector.expanded {
+    max-height: 240px; /* Expanded height to fit all buttons */
+}
+
+.region-header {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #2C2C2C;
+    color: #FFD700;
+    text-align: center;
+    font-weight: bold;
+}
+
+.region-options {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    display: none;
+}
+
+.region-selector.expanded .region-options {
+    display: flex; /* Show options when expanded */
+}
+
+.region-btn {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #FFD700;
+    color: #0D0D0D;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%; /* Ensure buttons fill the width of the container */
+}
+
+.region-btn:hover {
+    background-color: #FFC700;
+    transform: scale(1.05);
+}
