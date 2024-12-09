@@ -1,5 +1,5 @@
 // Set up variables
-const expansionReleaseDate = new Date('2024-08-26');
+const expansionReleaseDate = new Date('2024-08-28');
 const today = new Date();
 const weeksSinceRelease = Math.floor((today - expansionReleaseDate) / (7 * 24 * 60 * 60 * 1000));
 const fracturedSparks = weeksSinceRelease + 1; // Including the extra spark from the quest
