@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spark Tracker</title>
+    <title>How Many Sparks — Midnight Season 2</title>
+    <meta name="description" content="Spark of Tides tracker for World of Warcraft Midnight Season 2. Plan Tidal crafts, Mistcrests, and Mythic+ runs.">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div id="regionSelector" class="region-selector">
           <div class="region-header" onclick="toggleRegionSelector()">
-              <p>Select Region</p>
+              <p id="regionLabel">Select Region</p>
           </div>
           <div class="region-options">
               <button class="region-btn" onclick="selectRegion('EU')">EU</button>
@@ -19,7 +20,6 @@
           </div>
       </div>
 
-        <!-- SVG Header with "Spark" and "Tracker" -->
         <div class="header">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@
                 x="50%"
                 y="50%"
                 text-anchor="middle"
-                fill="#FFD700"
+                fill="#5EEAD4"
                 font-size="36"
                 font-family="Verdana, Geneva, sans-serif"
                 font-weight="bold"
@@ -40,7 +40,7 @@
                 Spark
                 <animate
                   attributeName="fill"
-                  values="#FFD700; #FF4500; #FFD700"
+                  values="#5EEAD4; #38BDF8; #5EEAD4"
                   dur="2s"
                   repeatCount="indefinite"
                 />
@@ -54,7 +54,7 @@
             >
               <path
                 d="M100 10 C120 60, 140 90, 100 170 C60 90, 80 60, 100 10"
-                fill="#FF4500"
+                fill="#0EA5E9"
               >
                 <animate
                   attributeName="d"
@@ -68,7 +68,7 @@
               </path>
               <path
                 d="M100 50 C110 80, 120 100, 100 150 C80 100, 90 80, 100 50"
-                fill="#FFD700"
+                fill="#5EEAD4"
               >
                 <animate
                   attributeName="d"
@@ -84,7 +84,7 @@
                 cx="100"
                 cy="40"
                 r="5"
-                fill="#FF6347"
+                fill="#7DD3FC"
                 opacity="0.8"
               >
                 <animate
@@ -111,7 +111,7 @@
                 x="50%"
                 y="50%"
                 text-anchor="middle"
-                fill="#FFD700"
+                fill="#5EEAD4"
                 font-size="36"
                 font-family="Verdana, Geneva, sans-serif"
                 font-weight="bold"
@@ -120,7 +120,7 @@
                 Tracker
                 <animate
                   attributeName="fill"
-                  values="#FFD700; #1E90FF; #FFD700"
+                  values="#5EEAD4; #A78BFA; #5EEAD4"
                   dur="2s"
                   repeatCount="indefinite"
                 />
@@ -128,37 +128,38 @@
             </svg>
         </div>
 
-        <!-- Progress Section -->
+        <p class="season-badge">Midnight Season 2 · Spark of Tides</p>
+        <p class="season-note">No fractured sparks this season. You earn one full Spark of Tides each week. Most crafts cost 2; two-handers cost 4.</p>
+
         <div class="progress">
             <p id="fractured"></p>
         </div>
 
-        <!-- Centralized Checkbox Sections -->
         <div class="controls">
-            <!-- Crest Selection Section -->
             <div class="checkbox-section">
-                <h2>Crest Selection</h2>
+                <h2>Craft Track</h2>
                 <label>
-                    <input type="checkbox" id="runedCheckbox" onchange="handleCrestTypeChange('Runed')"> Runed
+                    <input type="checkbox" id="championCheckbox" onchange="handleCrestTypeChange('Champion')"> Champion (sparks only)
                 </label>
                 <label>
-                    <input type="checkbox" id="gildedCheckbox" onchange="handleCrestTypeChange('Gilded')"> Gilded
+                    <input type="checkbox" id="heroCheckbox" onchange="handleCrestTypeChange('Hero')"> Hero Mistcrests
+                </label>
+                <label>
+                    <input type="checkbox" id="mythCheckbox" onchange="handleCrestTypeChange('Myth')"> Myth Mistcrests
                 </label>
             </div>
 
-            <!-- Weapon Selection Section -->
             <div class="checkbox-section">
                 <h2>Weapon Selection</h2>
                 <label>
-                    <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('1H')"> 1H + Offhand
+                    <input type="checkbox" id="oneHandCheckbox" onchange="handleCheckboxChange('1H')"> 1H + Offhand (4 sparks)
                 </label>
                 <label>
-                    <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('2H')"> Two-Handed
+                    <input type="checkbox" id="twoHandCheckbox" onchange="handleCheckboxChange('2H')"> Two-Handed (4 sparks)
                 </label>
             </div>
         </div>
 
-        <!-- Sparks Already Used -->
         <div class="sparks-usage">
             <p>
                 <strong>Sparks Already Used:</strong> <span id="usedSparksCounter">0</span>
@@ -167,14 +168,13 @@
             </p>
         </div>
 
-        <!-- Results Section -->
         <div class="results">
             <p id="selected-craft">Select options above to see total costs.</p>
             <div id="mythic-runs"></div>
         </div>
 
-        <!-- Script Display -->
         <div class="script-container">
+            <p class="script-label">Check your seasonal cap in-game (Tidal Spark Dust):</p>
             <pre id="wowScript">Generating script...</pre>
             <button onclick="copyToClipboard()">Copy</button>
         </div>
