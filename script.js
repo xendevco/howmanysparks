@@ -69,6 +69,29 @@ function getAvailableSparks(startDate) {
     return SEASON_START_CAP + weeksSinceStart;
 }
 
+function getRemainingSparks() {
+    return Math.max(totalSparks - usedSparks, 0);
+}
+
+function updateCraftableCounter() {
+    const remainingSparks = getRemainingSparks();
+    const itemsCraftable = Math.floor(remainingSparks / SPARKS_PER_STANDARD_CRAFT);
+    const leftoverSparks = remainingSparks % SPARKS_PER_STANDARD_CRAFT;
+    const twoHanders = Math.floor(remainingSparks / SPARKS_PER_TWO_HAND);
+
+    document.getElementById('craftableCount').innerText = itemsCraftable;
+
+    const leftoverNote = leftoverSparks > 0
+        ? ` · ${leftoverSparks} spark leftover`
+        : '';
+    const twoHandNote = twoHanders > 0
+        ? ` · or ${twoHanders} two-hander${twoHanders === 1 ? '' : 's'}`
+        : '';
+
+    document.getElementById('craftableNote').innerText =
+        `from ${remainingSparks} remaining spark${remainingSparks === 1 ? '' : 's'}${leftoverNote}${twoHandNote}`;
+}
+
 function updateSparksCount() {
     totalSparks = getAvailableSparks(seasonStartDate);
     usedSparks = Math.min(usedSparks, totalSparks);
@@ -155,9 +178,11 @@ function formatRunLine(key, crestsPerRun, totalCrests) {
 }
 
 function updateDisplay() {
+    updateCraftableCounter();
+
     const isOneHandSelected = document.getElementById('oneHandCheckbox').checked;
     const isTwoHandSelected = document.getElementById('twoHandCheckbox').checked;
-    const remainingSparks = Math.max(totalSparks - usedSparks, 0);
+    const remainingSparks = getRemainingSparks();
 
     if (!isOneHandSelected && !isTwoHandSelected) {
         document.getElementById('selected-craft').innerHTML = `

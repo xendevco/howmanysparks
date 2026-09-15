@@ -56,17 +56,26 @@ h1 {
     color: #B7C9DC;
 }
 
+.stats-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
 .progress {
     display: flex;
+    flex: 1;
+    flex-direction: column;
     justify-content: center;
-    padding: 10px 20px;
-    margin-bottom: 20px;
+    align-items: center;
+    padding: 14px 18px;
     background-color: #162238;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #E8F4FF;
     border: 1px solid #2A4A73;
     font-weight: bold;
+    text-align: center;
 }
 
 .progress span {
@@ -77,6 +86,31 @@ h1 {
     color: #5EEAD4;
     font-weight: bold;
     margin: 0;
+}
+
+.craftable-stat .stat-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #B7C9DC;
+}
+
+.craftable-stat .stat-value {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin: 4px 0;
+    color: #5EEAD4;
+}
+
+.craftable-stat .stat-value span {
+    color: #5EEAD4;
+}
+
+.craftable-stat .stat-note {
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: #B7C9DC;
+    line-height: 1.4;
 }
 
 .controls {
@@ -284,6 +318,7 @@ button:hover {
 }
 
 @media (max-width: 700px) {
+    .stats-row,
     .controls {
         flex-direction: column;
     }
